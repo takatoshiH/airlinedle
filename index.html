@@ -50,7 +50,11 @@
             second_input.classList.add('correct');
             third_input.classList.add('correct');
             alert(`正解です!`);
-            location.reload();
+            if(confirm("NEXT")) {
+                location.reload();
+            } else {
+                location.reload();
+            }
         }
 
         if(!airlines.includes(airline)) {
@@ -160,7 +164,11 @@
             second_input.classList.add('correct');
             third_input.classList.add('correct');
             alert(`正解です!`);
-            location.reload();
+            if(confirm("NEXT")) {
+                location.reload();
+            } else {
+                location.reload();
+            }
         }
 
         if(!airlines.includes(airline)) {
@@ -269,8 +277,11 @@
             second_input.classList.add('correct');
             third_input.classList.add('correct');
             alert(`正解です!`);
-            location.reload();
-            return;
+            if(confirm("NEXT")) {
+                location.reload();
+            } else {
+                location.reload();
+            }
         }
 
         if(!airlines.includes(airline)) {
