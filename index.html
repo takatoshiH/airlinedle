@@ -1,0 +1,364 @@
+<html>
+<head>
+<script></script>
+</head>
+<h1>Airlinedle</h1>
+<div style="text-align: center">
+    <div>
+        <input id="1_1" maxlength="1" class="1">
+        <input id="1_2" maxlength="1">
+        <input id="1_3" maxlength="1">
+        <button id="1_submit">決定</button>
+    </div>
+    <div>
+        <input id="2_1" maxlength="1" disabled>
+        <input id="2_2" maxlength="1" disabled>
+        <input id="2_3" maxlength="1" disabled>
+        <button id="2_submit" disabled>決定</button>
+    </div>
+    <div>
+        <input id="3_1" maxlength="1" disabled>
+        <input id="3_2" maxlength="1" disabled>
+        <input id="3_3" maxlength="1" disabled>
+        <button id="3_submit" disabled>決定</button>
+    </div>
+</html>
+
+<script>
+    const airlines = ["ANA", "ADO", "IBX", "ORC", "SFJ", "SNA", "JAL", "HAC", "JAC", "SKY", "JST", "APJ", "FDA", "SJO", "VNL", "AHX", "WAJ"];
+    const answer = airlines[Math.floor(Math.random() * (airlines.length - 1))];
+    const splited_answer = answer.split("");
+
+    console.log(splited_answer);
+
+    // 一列目
+    document.getElementById("1_submit").addEventListener("click", () => {
+        const first_input = document.getElementById("1_1");
+        const second_input = document.getElementById("1_2");
+        const third_input = document.getElementById("1_3");
+        const button = document.getElementById("1_submit")
+
+        const first = first_input.value;
+        const second = second_input.value;
+        const third =third_input.value;
+        const airline = first + second + third;
+
+        //正解の時
+        if(airline === answer) {
+            alert(`正解です!`);
+            location.reload();
+        }
+
+        if(!airlines.includes(airline)) {
+            alert("そのような航空会社はありません");
+            return;
+        }
+
+        let results = [];
+
+        for (let index = 0; index < splited_answer.length; index++) {
+            const word = answer[index];
+
+            // 一文字目の検証
+            if(index == 0) {
+                if(word === first) {
+                    results.push("correct");
+                } else if(answer.includes(first)) {
+                    results.push("include");
+                } else {
+                    results.push("wrong");
+                }
+            }
+
+            if(index == 1) {
+                if(word === second) {
+                    results.push("correct");
+                } else if(answer.includes(second)) {
+                    results.push("include");
+                }else {
+                    results.push("wrong");
+                }
+            }
+
+            if(index == 2) {
+                if(word === third) {
+                    results.push("correct");
+                } else if(answer.includes(third)) {
+                    results.push("include");
+                } else {
+                    results.push("wrong");
+                }
+            }
+        }
+
+        button.setAttribute("disabled", true);
+        first_input.setAttribute("disabled", true);
+        second_input.setAttribute("disabled", true);
+        third_input.setAttribute("disabled", true);
+
+        for (let index = 0; index < results.length; index++) {
+            const result = results[index];
+            if(index === 0) {
+                if (result === "correct") {
+                    first_input.classList.add('correct');
+                } else if(result ==="include") {
+                    first_input.classList.add('include');
+                } else {
+                    first_input.classList.add('wrong');
+                }
+            }
+
+            if(index === 1) {
+                if (result === "correct") {
+                    second_input.classList.add('correct');
+                } else if(result ==="include") {
+                    second_input.classList.add('include');
+                } else {
+                    second_input.classList.add('wrong');
+                }
+            }
+
+            if(index === 2) {
+                if (result === "correct") {
+                    third_input.classList.add('correct');
+                } else if(result ==="include") {
+                    third_input.classList.add('include');
+                } else {
+                    third_input.classList.add('wrong');
+                }
+            }
+        }
+
+        document.getElementById("2_submit").removeAttribute("disabled");
+        document.getElementById("2_1").removeAttribute("disabled");
+        document.getElementById("2_2").removeAttribute("disabled");
+        document.getElementById("2_3").removeAttribute("disabled");
+
+    });
+
+
+
+    // 二列目
+    document.getElementById("2_submit").addEventListener("click", () => {
+        const first_input = document.getElementById("2_1");
+        const second_input = document.getElementById("2_2");
+        const third_input = document.getElementById("2_3");
+        const button = document.getElementById("2_submit")
+
+        const first = first_input.value;
+        const second = second_input.value;
+        const third =third_input.value;
+        const airline = first + second + third;
+
+        //正解の時
+        if(airline === answer) {
+            alert(`正解です!`);
+            location.reload();
+        }
+
+        if(!airlines.includes(airline)) {
+            alert("そのような航空会社はありません");
+            return;
+        }
+
+        let results = [];
+
+        for (let index = 0; index < splited_answer.length; index++) {
+            const word = answer[index];
+
+            // 一文字目の検証
+            if(index == 0) {
+                if(word === first) {
+                    results.push("correct");
+                } else if(answer.includes(first)) {
+                    results.push("include");
+                } else {
+                    results.push("wrong");
+                }
+            }
+
+            if(index == 1) {
+                if(word === second) {
+                    results.push("correct");
+                } else if(answer.includes(second)) {
+                    results.push("include");
+                }else {
+                    results.push("wrong");
+                }
+            }
+
+            if(index == 2) {
+                if(word === third) {
+                    results.push("correct");
+                } else if(answer.includes(third)) {
+                    results.push("include");
+                } else {
+                    results.push("wrong");
+                }
+            }
+        }
+
+        button.setAttribute("disabled", true);
+        first_input.setAttribute("disabled", true);
+        second_input.setAttribute("disabled", true);
+        third_input.setAttribute("disabled", true);
+
+        for (let index = 0; index < results.length; index++) {
+            const result = results[index];
+            if(index === 0) {
+                if (result === "correct") {
+                    first_input.classList.add('correct');
+                } else if(result ==="include") {
+                    first_input.classList.add('include');
+                } else {
+                    first_input.classList.add('wrong');
+                }
+            }
+
+            if(index === 1) {
+                if (result === "correct") {
+                    second_input.classList.add('correct');
+                } else if(result ==="include") {
+                    second_input.classList.add('include');
+                } else {
+                    second_input.classList.add('wrong');
+                }
+            }
+
+            if(index === 2) {
+                if (result === "correct") {
+                    third_input.classList.add('correct');
+                } else if(result ==="include") {
+                    third_input.classList.add('include');
+                } else {
+                    third_input.classList.add('wrong');
+                }
+            }
+        }
+
+        document.getElementById("3_submit").removeAttribute("disabled");
+        document.getElementById("3_1").removeAttribute("disabled");
+        document.getElementById("3_2").removeAttribute("disabled");
+        document.getElementById("3_3").removeAttribute("disabled");
+
+    });
+
+    // 三列目
+    // 一列目
+    document.getElementById("3_submit").addEventListener("click", () => {
+        const first_input = document.getElementById("3_1");
+        const second_input = document.getElementById("3_2");
+        const third_input = document.getElementById("3_3");
+        const button = document.getElementById("3_submit")
+
+        const first = first_input.value;
+        const second = second_input.value;
+        const third =third_input.value;
+        const airline = first + second + third;
+
+        //正解の時
+        if(airline === answer) {
+            alert(`正解です!`);
+            location.reload();
+            return;
+        }
+
+        if(!airlines.includes(airline)) {
+            alert("そのような航空会社はありません");
+            return;
+        }
+
+        let results = [];
+
+        for (let index = 0; index < splited_answer.length; index++) {
+            const word = answer[index];
+
+            // 一文字目の検証
+            if(index == 0) {
+                if(word === first) {
+                    results.push("correct");
+                } else if(answer.includes(first)) {
+                    results.push("include");
+                } else {
+                    results.push("wrong");
+                }
+            }
+
+            if(index == 1) {
+                if(word === second) {
+                    results.push("correct");
+                } else if(answer.includes(second)) {
+                    results.push("include");
+                }else {
+                    results.push("wrong");
+                }
+            }
+
+            if(index == 2) {
+                if(word === third) {
+                    results.push("correct");
+                } else if(answer.includes(third)) {
+                    results.push("include");
+                } else {
+                    results.push("wrong");
+                }
+            }
+        }
+
+        button.setAttribute("disabled", true);
+        first_input.setAttribute("disabled", true);
+        second_input.setAttribute("disabled", true);
+        third_input.setAttribute("disabled", true);
+
+        for (let index = 0; index < results.length; index++) {
+            const result = results[index];
+            if(index === 0) {
+                if (result === "correct") {
+                    first_input.classList.add('correct');
+                } else if(result ==="include") {
+                    first_input.classList.add('include');
+                } else {
+                    first_input.classList.add('wrong');
+                }
+            }
+
+            if(index === 1) {
+                if (result === "correct") {
+                    second_input.classList.add('correct');
+                } else if(result ==="include") {
+                    second_input.classList.add('include');
+                } else {
+                    second_input.classList.add('wrong');
+                }
+            }
+
+            if(index === 2) {
+                if (result === "correct") {
+                    third_input.classList.add('correct');
+                } else if(result ==="include") {
+                    third_input.classList.add('include');
+                } else {
+                    third_input.classList.add('wrong');
+                }
+            }
+        }
+
+        alert(`正解は ${answer}でした`);
+
+        location.reload();
+    });
+</script>
+
+<style>
+    .correct {
+        background-color: lawngreen;
+    }
+
+    .include {
+        background-color: yellow;
+    }
+
+    .wrong {
+        background-color: gray;
+    }
+</style>
