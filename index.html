@@ -2,25 +2,26 @@
 <head>
 <script></script>
 </head>
-<h1>Airlinedle</h1>
-<h3>国内線を運行している航空会社の3レターを入れよう！</h3>
-<div style="text-align: center">
-    <div>
-        <input id="1_1" maxlength="1" class="1">
-        <input id="1_2" maxlength="1">
-        <input id="1_3" maxlength="1">
+<h1 style="text-align: center">Airdle</h1>
+<h3 style="text-align: center">国内線を運行している航空会社の3レターを入れよう！</h3>
+<h4 style="text-align: center"><a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">ルールはこちらを参考に</a></h4>
+<div style="text-align: center;">
+    <div class="record">
+        <input id="1_1" maxlength="1" class="input">
+        <input id="1_2" maxlength="1" class="input">
+        <input id="1_3" maxlength="1" class="input">
         <button id="1_submit">決定</button>
     </div>
-    <div>
-        <input id="2_1" maxlength="1" disabled>
-        <input id="2_2" maxlength="1" disabled>
-        <input id="2_3" maxlength="1" disabled>
+    <div class="record">
+        <input id="2_1" maxlength="1" disabled class="input">
+        <input id="2_2" maxlength="1" disabled class="input">
+        <input id="2_3" maxlength="1" disabled class="input">
         <button id="2_submit" disabled>決定</button>
     </div>
-    <div>
-        <input id="3_1" maxlength="1" disabled>
-        <input id="3_2" maxlength="1" disabled>
-        <input id="3_3" maxlength="1" disabled>
+    <div class="record">
+        <input id="3_1" maxlength="1" disabled class="input">
+        <input id="3_2" maxlength="1" disabled class="input">
+        <input id="3_3" maxlength="1" disabled class="input">
         <button id="3_submit" disabled>決定</button>
     </div>
 </html>
@@ -30,32 +31,22 @@
     const answer = airlines[Math.floor(Math.random() * (airlines.length - 1))];
     const splited_answer = answer.split("");
 
-    console.log(splited_answer);
+    console.log(answer);
 
     // 一列目
     document.getElementById("1_submit").addEventListener("click", () => {
-        const first_input = document.getElementById("1_1");
-        const second_input = document.getElementById("1_2");
-        const third_input = document.getElementById("1_3");
-        const button = document.getElementById("1_submit")
+        const recordNumber = 1;
+        let [first_input, second_input, third_input, button] = getNeededDoms(recordNumber);
 
         const first = first_input.value;
         const second = second_input.value;
-        const third =third_input.value;
+        const third = third_input.value;
         const airline = first + second + third;
 
         //正解の時
         if(airline === answer) {
-            first_input.classList.add('correct');
-            second_input.classList.add('correct');
-            third_input.classList.add('correct');
             alert(`正解です!`);
-            if(confirm("NEXT")) {
-                location.reload();
-            } else {
-                location.reload();
-            }
-
+            if(confirm("NEXT")) location.reload();
             return;
         }
 
@@ -68,37 +59,9 @@
 
         for (let index = 0; index < splited_answer.length; index++) {
             const word = answer[index];
-
-            // 一文字目の検証
-            if(index == 0) {
-                if(word === first) {
-                    results.push("correct");
-                } else if(answer.includes(first)) {
-                    results.push("include");
-                } else {
-                    results.push("wrong");
-                }
-            }
-
-            if(index == 1) {
-                if(word === second) {
-                    results.push("correct");
-                } else if(answer.includes(second)) {
-                    results.push("include");
-                }else {
-                    results.push("wrong");
-                }
-            }
-
-            if(index == 2) {
-                if(word === third) {
-                    results.push("correct");
-                } else if(answer.includes(third)) {
-                    results.push("include");
-                } else {
-                    results.push("wrong");
-                }
-            }
+            if(index == 0) results.push(giveResult(word, first));
+            if(index == 1) results.push(giveResult(word, second));
+            if(index == 2) results.push(giveResult(word, third));
         }
 
         button.setAttribute("disabled", true);
@@ -108,52 +71,18 @@
 
         for (let index = 0; index < results.length; index++) {
             const result = results[index];
-            if(index === 0) {
-                if (result === "correct") {
-                    first_input.classList.add('correct');
-                } else if(result ==="include") {
-                    first_input.classList.add('include');
-                } else {
-                    first_input.classList.add('wrong');
-                }
-            }
-
-            if(index === 1) {
-                if (result === "correct") {
-                    second_input.classList.add('correct');
-                } else if(result ==="include") {
-                    second_input.classList.add('include');
-                } else {
-                    second_input.classList.add('wrong');
-                }
-            }
-
-            if(index === 2) {
-                if (result === "correct") {
-                    third_input.classList.add('correct');
-                } else if(result ==="include") {
-                    third_input.classList.add('include');
-                } else {
-                    third_input.classList.add('wrong');
-                }
-            }
+            if(index === 0) giveResultClass(result, first_input);
+            if(index === 1) giveResultClass(result, second_input);
+            if(index === 2) giveResultClass(result, third_input);
         }
 
-        document.getElementById("2_submit").removeAttribute("disabled");
-        document.getElementById("2_1").removeAttribute("disabled");
-        document.getElementById("2_2").removeAttribute("disabled");
-        document.getElementById("2_3").removeAttribute("disabled");
-
+        removeDisabled(2);
     });
-
-
 
     // 二列目
     document.getElementById("2_submit").addEventListener("click", () => {
-        const first_input = document.getElementById("2_1");
-        const second_input = document.getElementById("2_2");
-        const third_input = document.getElementById("2_3");
-        const button = document.getElementById("2_submit")
+        const recordNumber = 2;
+        let [first_input, second_input, third_input, button] = getNeededDoms(recordNumber);
 
         const first = first_input.value;
         const second = second_input.value;
@@ -162,16 +91,8 @@
 
         //正解の時
         if(airline === answer) {
-            first_input.classList.add('correct');
-            second_input.classList.add('correct');
-            third_input.classList.add('correct');
             alert(`正解です!`);
-            if(confirm("NEXT")) {
-                location.reload();
-            } else {
-                location.reload();
-            }
-
+            if(confirm("NEXT")) location.reload();
             return;
         }
 
@@ -184,37 +105,9 @@
 
         for (let index = 0; index < splited_answer.length; index++) {
             const word = answer[index];
-
-            // 一文字目の検証
-            if(index == 0) {
-                if(word === first) {
-                    results.push("correct");
-                } else if(answer.includes(first)) {
-                    results.push("include");
-                } else {
-                    results.push("wrong");
-                }
-            }
-
-            if(index == 1) {
-                if(word === second) {
-                    results.push("correct");
-                } else if(answer.includes(second)) {
-                    results.push("include");
-                }else {
-                    results.push("wrong");
-                }
-            }
-
-            if(index == 2) {
-                if(word === third) {
-                    results.push("correct");
-                } else if(answer.includes(third)) {
-                    results.push("include");
-                } else {
-                    results.push("wrong");
-                }
-            }
+            if(index == 0) results.push(giveResult(word, first));
+            if(index == 1) results.push(giveResult(word, second));
+            if(index == 2) results.push(giveResult(word, third));
         }
 
         button.setAttribute("disabled", true);
@@ -224,51 +117,19 @@
 
         for (let index = 0; index < results.length; index++) {
             const result = results[index];
-            if(index === 0) {
-                if (result === "correct") {
-                    first_input.classList.add('correct');
-                } else if(result ==="include") {
-                    first_input.classList.add('include');
-                } else {
-                    first_input.classList.add('wrong');
-                }
-            }
+            if(index === 0) giveResultClass(result, first_input);
+            if(index === 1) giveResultClass(result, second_input);
+            if(index === 2) giveResultClass(result, third_input);
 
-            if(index === 1) {
-                if (result === "correct") {
-                    second_input.classList.add('correct');
-                } else if(result ==="include") {
-                    second_input.classList.add('include');
-                } else {
-                    second_input.classList.add('wrong');
-                }
-            }
-
-            if(index === 2) {
-                if (result === "correct") {
-                    third_input.classList.add('correct');
-                } else if(result ==="include") {
-                    third_input.classList.add('include');
-                } else {
-                    third_input.classList.add('wrong');
-                }
-            }
         }
 
-        document.getElementById("3_submit").removeAttribute("disabled");
-        document.getElementById("3_1").removeAttribute("disabled");
-        document.getElementById("3_2").removeAttribute("disabled");
-        document.getElementById("3_3").removeAttribute("disabled");
-
+        removeDisabled(3);
     });
 
     // 三列目
-    // 一列目
     document.getElementById("3_submit").addEventListener("click", () => {
-        const first_input = document.getElementById("3_1");
-        const second_input = document.getElementById("3_2");
-        const third_input = document.getElementById("3_3");
-        const button = document.getElementById("3_submit")
+        const recordNumber = 3;
+        let [first_input, second_input, third_input, button] = getNeededDoms(recordNumber);
 
         const first = first_input.value;
         const second = second_input.value;
@@ -277,16 +138,8 @@
 
         //正解の時
         if(airline === answer) {
-            first_input.classList.add('correct');
-            second_input.classList.add('correct');
-            third_input.classList.add('correct');
             alert(`正解です!`);
-            if(confirm("NEXT")) {
-                location.reload();
-            } else {
-                location.reload();
-            }
-
+            if(confirm("NEXT")) location.reload();
             return;
         }
 
@@ -299,37 +152,9 @@
 
         for (let index = 0; index < splited_answer.length; index++) {
             const word = answer[index];
-
-            // 一文字目の検証
-            if(index == 0) {
-                if(word === first) {
-                    results.push("correct");
-                } else if(answer.includes(first)) {
-                    results.push("include");
-                } else {
-                    results.push("wrong");
-                }
-            }
-
-            if(index == 1) {
-                if(word === second) {
-                    results.push("correct");
-                } else if(answer.includes(second)) {
-                    results.push("include");
-                }else {
-                    results.push("wrong");
-                }
-            }
-
-            if(index == 2) {
-                if(word === third) {
-                    results.push("correct");
-                } else if(answer.includes(third)) {
-                    results.push("include");
-                } else {
-                    results.push("wrong");
-                }
-            }
+            if(index == 0) results.push(giveResult(word, first));
+            if(index == 1) results.push(giveResult(word, second));
+            if(index == 2) results.push(giveResult(word, third));
         }
 
         button.setAttribute("disabled", true);
@@ -339,41 +164,45 @@
 
         for (let index = 0; index < results.length; index++) {
             const result = results[index];
-            if(index === 0) {
-                if (result === "correct") {
-                    first_input.classList.add('correct');
-                } else if(result ==="include") {
-                    first_input.classList.add('include');
-                } else {
-                    first_input.classList.add('wrong');
-                }
-            }
-
-            if(index === 1) {
-                if (result === "correct") {
-                    second_input.classList.add('correct');
-                } else if(result ==="include") {
-                    second_input.classList.add('include');
-                } else {
-                    second_input.classList.add('wrong');
-                }
-            }
-
-            if(index === 2) {
-                if (result === "correct") {
-                    third_input.classList.add('correct');
-                } else if(result ==="include") {
-                    third_input.classList.add('include');
-                } else {
-                    third_input.classList.add('wrong');
-                }
-            }
+            if(index === 0) giveResultClass(result, first_input);
+            if(index === 1) giveResultClass(result, second_input);
+            if(index === 2) giveResultClass(result, third_input);
         }
 
         alert(`正解は ${answer}でした`);
 
         location.reload();
     });
+
+    function giveResultClass(result, input) {
+        input.classList.add(result);
+    }
+
+    function getNeededDoms(index) {
+        const first_input = document.getElementById(`${index}_1`);
+        const second_input = document.getElementById(`${index}_2`);
+        const third_input = document.getElementById(`${index}_3`);
+        const button = document.getElementById(`${index}_submit`);
+
+        return [first_input, second_input, third_input, button];
+    }
+
+    function removeDisabled(index) {
+        document.getElementById(`${index}_submit`).removeAttribute("disabled");
+        document.getElementById(`${index}_1`).removeAttribute("disabled");
+        document.getElementById(`${index}_2`).removeAttribute("disabled");
+        document.getElementById(`${index}_3`).removeAttribute("disabled");
+    }
+
+    function giveResult(word, partOfAnswer) {
+        if(word === partOfAnswer) {
+            return "correct";
+        } else if(answer.includes(partOfAnswer)) {
+            return "include";
+        } else {
+            return "wrong";
+        }
+    }
 </script>
 
 <style>
@@ -387,5 +216,15 @@
 
     .wrong {
         background-color: gray;
+    }
+
+    .input {
+        text-align: center;
+        font-weight : bold;
+        height: 45px;
+    }
+
+    .record {
+        height: 50px;
     }
 </style>
