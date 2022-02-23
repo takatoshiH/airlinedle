@@ -24,6 +24,25 @@
         <input id="3_3" maxlength="1" disabled class="input">
         <button id="3_submit" disabled>決定</button>
     </div>
+
+<!--    正解時のmodal-->
+    <div class="popup" id="js-popup">
+        <div class="popup-inner">
+            <img src="happy.png">
+            <button id="next">Next</button>
+        </div>
+        <div class="black-background" id="js-black-bg"></div>
+    </div>
+
+    <!--    不正解時のmodal-->
+    <div class="popup" id="js-popup-lose">
+        <div class="popup-inner">
+            <img src="lose.png">
+            <div id="answer-airline"></div>
+            <button id="next-lose">Next</button>
+        </div>
+        <div class="black-background" id="js-black-bg-lose"></div>
+    </div>
 </html>
 
 <script>
@@ -45,8 +64,7 @@
 
         //正解の時
         if(airline === answer) {
-            alert(`正解です!`);
-            if(confirm("NEXT")) location.reload();
+            showModal();
             return;
         }
 
@@ -91,8 +109,7 @@
 
         //正解の時
         if(airline === answer) {
-            alert(`正解です!`);
-            if(confirm("NEXT")) location.reload();
+            showModal();
             return;
         }
 
@@ -138,8 +155,7 @@
 
         //正解の時
         if(airline === answer) {
-            alert(`正解です!`);
-            if(confirm("NEXT")) location.reload();
+            showModal();
             return;
         }
 
@@ -168,10 +184,9 @@
             if(index === 1) giveResultClass(result, second_input);
             if(index === 2) giveResultClass(result, third_input);
         }
+        showModalLose();
 
-        alert(`正解は ${answer}でした`);
-
-        location.reload();
+        // location.reload();
     });
 
     function giveResultClass(result, input) {
@@ -203,6 +218,44 @@
             return "wrong";
         }
     }
+
+    function showModal() {
+        let popup = document.getElementById('js-popup');
+        popup.classList.add('is-show');
+        closePopUp(document.getElementById('js-black-bg'));
+    }
+
+    function showModalLose() {
+        let popup = document.getElementById('js-popup-lose');
+        popup.classList.add('is-show');
+        document.getElementById("answer-airline").textContent = `正解は${answer}でした`;
+        closePopUpLose(document.getElementById('js-black-bg-lose'));
+    }
+
+    function closePopUp(elem) {
+        if(!elem) return;
+        elem.addEventListener('click', function() {
+            let popup = document.getElementById('js-popup');
+            popup.classList.remove('is-show');
+        })
+    }
+
+    function closePopUpLose(elem) {
+        if(!elem) return;
+        elem.addEventListener('click', function() {
+            let popup = document.getElementById('js-popup-lose');
+            popup.classList.remove('is-show');
+        })
+    }
+
+    document.getElementById("next").addEventListener("click", () => {
+       location.reload();
+    });
+
+    document.getElementById("next-lose").addEventListener("click", () => {
+        location.reload();
+    });
+
 </script>
 
 <style>
@@ -226,5 +279,59 @@
 
     .record {
         height: 50px;
+    }
+
+    .popup {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        opacity: 0;
+        visibility: hidden;
+        transition: .6s;
+    }
+    .popup.is-show {
+        opacity: 1;
+        visibility: visible;
+    }
+    .popup-inner {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        width: 80%;
+        max-width: 600px;
+        padding: 50px;
+        background-color: #fff;
+        z-index: 2;
+    }
+    .popup-inner img {
+        width: 100%;
+    }
+    .close-btn {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        cursor: pointer;
+    }
+    .close-btn i {
+        font-size: 20px;
+        color: #333;
+    }
+    .black-background {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,.8);
+        z-index: 1;
+        cursor: pointer;
     }
 </style>
