@@ -5,6 +5,7 @@
 <h1 class="sentence">Airdle</h1>
 <h3 class="sentence">国内線を運行している航空会社の3レターを入れよう！</h3>
 <h4 class="sentence"><a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">ルールはこちらを参考に</a></h4>
+<h4 class="sentence"><a href="./airport.html">国内空港版はこちら</a></h4>
 <div class="sentence">
     <div class="record">
         <input id="1_1" maxlength="1" class="input">
@@ -25,7 +26,7 @@
         <button id="3_submit" disabled>決定</button>
     </div>
 
-<!--    正解時のmodal-->
+    <!--    正解時のmodal-->
     <div class="popup" id="js-popup">
         <div class="popup-inner">
             <img src="happy.png">
@@ -52,24 +53,17 @@
     console.log(answer);
 
     const record = 3;
-    for (let index = 1; index <= record; index++){
+    for (let index = 1; index <= record; index++) {
         document.getElementById(`${index}_submit`).addEventListener("click", () => {
-            let [first_input, second_input, third_input, button] = getNeededDoms(index);
+            const [first_input, second_input, third_input, button] = getNeededDoms(index);
             const airline = first_input.value + second_input.value + third_input.value;
             const inputs = [first_input, second_input, third_input];
 
-            if(isCorrectAnswer(airline)) return;
-            if(isInappropriateAnswer(airline)) return;
-
-            let results = checkAnswers(inputs);
+            if (isCorrectAnswer(airline)) return;
+            if (isInappropriateAnswer(airline)) return;
             setDisabledAttribute([button, first_input, second_input, third_input]);
-            reflectAnswers(inputs, results)
-
-            if(index !== record){
-                removeDisabled(index + 1);
-            } else {
-                showModalLose();
-            }
+            reflectAnswers(inputs, checkAnswers(inputs));
+            index !== record ? removeDisabled(index + 1) : showModalLose();
         });
     }
 
@@ -78,7 +72,7 @@
     }
 
     function isCorrectAnswer(airline) {
-        if(airline === answer) {
+        if (airline === answer) {
             showModal();
             return true;
         }
@@ -86,7 +80,7 @@
     }
 
     function isInappropriateAnswer(airline) {
-        if(!airlines.includes(airline)) {
+        if (!airlines.includes(airline)) {
             alert("そのような航空会社はありません");
             return true;
         }
@@ -94,7 +88,7 @@
         return false;
     }
 
-    function checkAnswers(inputs){
+    function checkAnswers(inputs) {
         let results = [];
         for (let index = 0; index < answer.split("").length; index++) {
             const word = answer[index];
@@ -104,7 +98,7 @@
         return results;
     }
 
-    function reflectAnswers(inputs, results){
+    function reflectAnswers(inputs, results) {
         for (let index = 0; index < results.length; index++) {
             const result = results[index];
             giveResultClass(result, inputs[index]);
@@ -134,9 +128,9 @@
     }
 
     function giveResult(word, partOfAnswer) {
-        if(word === partOfAnswer) {
+        if (word === partOfAnswer) {
             return "correct";
-        } else if(answer.includes(partOfAnswer)) {
+        } else if (answer.includes(partOfAnswer)) {
             return "include";
         } else {
             return "wrong";
@@ -155,19 +149,19 @@
     }
 
     function closePopUp(elem) {
-        elem.addEventListener('click', function() {
+        elem.addEventListener('click', function () {
             document.getElementById('js-popup').classList.remove('is-show');
         })
     }
 
     function closePopUpLose(elem) {
-        elem.addEventListener('click', function() {
+        elem.addEventListener('click', function () {
             document.getElementById('js-popup-lose').classList.remove('is-show');
         })
     }
 
     document.getElementById("next").addEventListener("click", () => {
-       location.reload();
+        location.reload();
     });
 
     document.getElementById("next-lose").addEventListener("click", () => {
@@ -175,17 +169,17 @@
     });
 
     document.getElementById("1_1").addEventListener("input", () => {
-        document.getElementById("1_1").value =  document.getElementById("1_1").value.toUpperCase();
+        document.getElementById("1_1").value = document.getElementById("1_1").value.toUpperCase();
         document.getElementById("1_2").focus();
     });
 
     document.getElementById("1_2").addEventListener("input", () => {
-        document.getElementById("1_2").value =  document.getElementById("1_2").value.toUpperCase();
+        document.getElementById("1_2").value = document.getElementById("1_2").value.toUpperCase();
         document.getElementById("1_3").focus();
     });
 
     document.getElementById("1_3").addEventListener("input", () => {
-        document.getElementById("1_3").value =  document.getElementById("1_3").value.toUpperCase();
+        document.getElementById("1_3").value = document.getElementById("1_3").value.toUpperCase();
         document.getElementById("1_submit").focus();
     });
 
@@ -194,17 +188,17 @@
     });
 
     document.getElementById("2_1").addEventListener("input", () => {
-        document.getElementById("2_1").value =  document.getElementById("2_1").value.toUpperCase();
+        document.getElementById("2_1").value = document.getElementById("2_1").value.toUpperCase();
         document.getElementById("2_2").focus();
     });
 
     document.getElementById("2_2").addEventListener("input", () => {
-        document.getElementById("2_2").value =  document.getElementById("2_2").value.toUpperCase();
+        document.getElementById("2_2").value = document.getElementById("2_2").value.toUpperCase();
         document.getElementById("2_3").focus();
     });
 
     document.getElementById("2_3").addEventListener("input", () => {
-        document.getElementById("2_3").value =  document.getElementById("2_3").value.toUpperCase();
+        document.getElementById("2_3").value = document.getElementById("2_3").value.toUpperCase();
         document.getElementById("2_submit").focus();
     });
 
@@ -213,17 +207,17 @@
     });
 
     document.getElementById("3_1").addEventListener("input", () => {
-        document.getElementById("3_1").value =  document.getElementById("3_1").value.toUpperCase();
+        document.getElementById("3_1").value = document.getElementById("3_1").value.toUpperCase();
         document.getElementById("3_2").focus();
     });
 
     document.getElementById("3_2").addEventListener("input", () => {
-        document.getElementById("3_2").value =  document.getElementById("3_2").value.toUpperCase();
+        document.getElementById("3_2").value = document.getElementById("3_2").value.toUpperCase();
         document.getElementById("3_3").focus();
     });
 
     document.getElementById("3_3").addEventListener("input", () => {
-        document.getElementById("3_3").value =  document.getElementById("3_3").value.toUpperCase();
+        document.getElementById("3_3").value = document.getElementById("3_3").value.toUpperCase();
         document.getElementById("3_submit").focus();
     });
 
