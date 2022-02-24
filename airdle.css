@@ -73,3 +73,7 @@
     z-index: 1;
     cursor: pointer;
 }
+
+.sentence {
+    text-align: center;
+}
