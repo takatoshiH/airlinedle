@@ -1,36 +1,38 @@
 <html>
 <head>
     <link rel="stylesheet" href="airdle.css">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<h1 class="sentence">Airdle</h1>
-<h3 class="sentence">国内線を運行している航空会社の3レターを入れよう！</h3>
-<h4 class="sentence"><a href="https://www.nytimes.com/games/wordle/index.html" target="_blank">ルールはこちらを参考に</a></h4>
-<h4 class="sentence"><a href="./airport.html">Airdle 国内空港版はこちら</a></h4>
-<div class="sentence">
-    <div class="record">
-        <input id="1_1" maxlength="1" class="input">
-        <input id="1_2" maxlength="1" class="input">
-        <input id="1_3" maxlength="1" class="input">
-        <button id="1_submit">決定</button>
+<body>
+<h1 class="text-center text-4xl my-4 font-mono">Airdle</h1>
+<h3 class="text-center text-1xl my-4 font-mono">国内線を運行している航空会社の3レターを入れよう！</h3>
+<h4 class="text-center"><a href="https://www.nytimes.com/games/wordle/index.html" target="_blank" class="no-underline hover:underline text-cyan-500 font-mono">ルールはこちらを参考に</a></h4>
+<h4 class="text-center"><a href="./airport.html" class="no-underline hover:underline font-mono">Airdle 国内空港版はこちら</a></h4>
+<div class="text-center mt-4">
+    <div class="h-14">
+        <input id="1_1" maxlength="1" class="shadow border rounded focus:outline-none focus:shadow-outline text-center font-bold h-12">
+        <input id="1_2" maxlength="1" class="shadow border rounded focus:outline-none focus:shadow-outline text-center font-bold h-12">
+        <input id="1_3" maxlength="1" class="shadow border rounded focus:outline-none focus:shadow-outline text-center font-bold h-12">
+        <button id="1_submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">決定</button>
     </div>
-    <div class="record">
-        <input id="2_1" maxlength="1" disabled class="input">
-        <input id="2_2" maxlength="1" disabled class="input">
-        <input id="2_3" maxlength="1" disabled class="input">
-        <button id="2_submit" disabled>決定</button>
+    <div class="h-14">
+        <input id="2_1" maxlength="1" disabled class="shadow border rounded focus:outline-none focus:shadow-outline text-center font-bold h-12">
+        <input id="2_2" maxlength="1" disabled class="shadow border rounded focus:outline-none focus:shadow-outline text-center font-bold h-12">
+        <input id="2_3" maxlength="1" disabled class="shadow border rounded focus:outline-none focus:shadow-outline text-center font-bold h-12">
+        <button id="2_submit" disabled class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">決定</button>
     </div>
-    <div class="record">
-        <input id="3_1" maxlength="1" disabled class="input">
-        <input id="3_2" maxlength="1" disabled class="input">
-        <input id="3_3" maxlength="1" disabled class="input">
-        <button id="3_submit" disabled>決定</button>
+    <div class="h-14">
+        <input id="3_1" maxlength="1" disabled class="shadow border rounded focus:outline-none focus:shadow-outline text-center font-bold h-12">
+        <input id="3_2" maxlength="1" disabled class="shadow border rounded focus:outline-none focus:shadow-outline text-center font-bold h-12">
+        <input id="3_3" maxlength="1" disabled class="shadow border rounded focus:outline-none focus:shadow-outline text-center font-bold h-12">
+        <button id="3_submit" disabled class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">決定</button>
     </div>
 
     <!--    正解時のmodal-->
     <div class="popup" id="js-popup">
         <div class="popup-inner">
             <img src="happy.png">
-            <button id="next">Next</button>
+            <button id="next" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Next</button>
         </div>
         <div class="black-background" id="js-black-bg"></div>
     </div>
@@ -40,10 +42,12 @@
         <div class="popup-inner">
             <img src="lose.png">
             <div id="answer-airline"></div>
-            <button id="next-lose">Next</button>
+            <button id="next-lose" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Next</button>
         </div>
         <div class="black-background" id="js-black-bg-lose"></div>
     </div>
+
+</body>
 </html>
 
 <script>
@@ -160,26 +164,24 @@
         })
     }
 
-    document.getElementById("next").addEventListener("click", () => {
-        location.reload();
-    });
-
-    document.getElementById("next-lose").addEventListener("click", () => {
-        location.reload();
+    ["next", "next-lose"].forEach((next_button) => {
+        document.getElementById(next_button).addEventListener("click", () => {
+            location.reload();
+        });
     });
 
     document.getElementById("1_1").addEventListener("input", () => {
-        document.getElementById("1_1").value = document.getElementById("1_1").value.toUpperCase();
+        ownValueChangeUpper("1_1");
         document.getElementById("1_2").focus();
     });
 
     document.getElementById("1_2").addEventListener("input", () => {
-        document.getElementById("1_2").value = document.getElementById("1_2").value.toUpperCase();
+        ownValueChangeUpper("1_2");
         document.getElementById("1_3").focus();
     });
 
     document.getElementById("1_3").addEventListener("input", () => {
-        document.getElementById("1_3").value = document.getElementById("1_3").value.toUpperCase();
+        ownValueChangeUpper("1_3");
         document.getElementById("1_submit").focus();
     });
 
@@ -188,17 +190,17 @@
     });
 
     document.getElementById("2_1").addEventListener("input", () => {
-        document.getElementById("2_1").value = document.getElementById("2_1").value.toUpperCase();
+        ownValueChangeUpper("2_1");
         document.getElementById("2_2").focus();
     });
 
     document.getElementById("2_2").addEventListener("input", () => {
-        document.getElementById("2_2").value = document.getElementById("2_2").value.toUpperCase();
+        ownValueChangeUpper("2_2");
         document.getElementById("2_3").focus();
     });
 
     document.getElementById("2_3").addEventListener("input", () => {
-        document.getElementById("2_3").value = document.getElementById("2_3").value.toUpperCase();
+        ownValueChangeUpper("2_3");
         document.getElementById("2_submit").focus();
     });
 
@@ -207,18 +209,22 @@
     });
 
     document.getElementById("3_1").addEventListener("input", () => {
-        document.getElementById("3_1").value = document.getElementById("3_1").value.toUpperCase();
+        ownValueChangeUpper("3_1");
         document.getElementById("3_2").focus();
     });
 
     document.getElementById("3_2").addEventListener("input", () => {
-        document.getElementById("3_2").value = document.getElementById("3_2").value.toUpperCase();
+        ownValueChangeUpper("3_2");
         document.getElementById("3_3").focus();
     });
 
     document.getElementById("3_3").addEventListener("input", () => {
-        document.getElementById("3_3").value = document.getElementById("3_3").value.toUpperCase();
+        ownValueChangeUpper("3_3");
         document.getElementById("3_submit").focus();
     });
+
+    function ownValueChangeUpper(id) {
+        document.getElementById(id).value = document.getElementById(id).value.toUpperCase();
+    }
 
 </script>
