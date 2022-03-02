@@ -170,58 +170,30 @@
         });
     });
 
-    document.getElementById("1_1").addEventListener("input", () => {
-        ownValueChangeUpper("1_1");
-        document.getElementById("1_2").focus();
+    const ids = ["1_1", "1_2", "1_3", "1_submit", "2_1", "2_2", "2_3", "2_submit", "3_1", "3_2", "3_3","3_submit"];
+
+    ids.forEach((id, index) => {
+        if(ids.length === index + 1) return;
+       document.getElementById(id).addEventListener("input", () => {
+           ownValueChangeUpper(id);
+           document.getElementById(ids[index + 1]).focus();
+       });
     });
 
-    document.getElementById("1_2").addEventListener("input", () => {
-        ownValueChangeUpper("1_2");
-        document.getElementById("1_3").focus();
-    });
-
-    document.getElementById("1_3").addEventListener("input", () => {
-        ownValueChangeUpper("1_3");
-        document.getElementById("1_submit").focus();
-    });
-
-    document.getElementById("1_submit").addEventListener("click", () => {
-        document.getElementById("2_1").focus();
-    });
-
-    document.getElementById("2_1").addEventListener("input", () => {
-        ownValueChangeUpper("2_1");
-        document.getElementById("2_2").focus();
-    });
-
-    document.getElementById("2_2").addEventListener("input", () => {
-        ownValueChangeUpper("2_2");
-        document.getElementById("2_3").focus();
-    });
-
-    document.getElementById("2_3").addEventListener("input", () => {
-        ownValueChangeUpper("2_3");
-        document.getElementById("2_submit").focus();
-    });
-
-    document.getElementById("2_submit").addEventListener("click", () => {
-        document.getElementById("3_1").focus();
-    });
-
-    document.getElementById("3_1").addEventListener("input", () => {
-        ownValueChangeUpper("3_1");
-        document.getElementById("3_2").focus();
-    });
-
-    document.getElementById("3_2").addEventListener("input", () => {
-        ownValueChangeUpper("3_2");
-        document.getElementById("3_3").focus();
-    });
-
-    document.getElementById("3_3").addEventListener("input", () => {
-        ownValueChangeUpper("3_3");
-        document.getElementById("3_submit").focus();
-    });
+    // document.getElementById("1_1").addEventListener("input", () => {
+    //     ownValueChangeUpper("1_1");
+    //     document.getElementById("1_2").focus();
+    // });
+    //
+    // document.getElementById("1_2").addEventListener("input", () => {
+    //     ownValueChangeUpper("1_2");
+    //     document.getElementById("1_3").focus();
+    // });
+    //
+    // document.getElementById("1_3").addEventListener("input", () => {
+    //     ownValueChangeUpper("1_3");
+    //     document.getElementById("1_submit").focus();
+    // });
 
     function ownValueChangeUpper(id) {
         document.getElementById(id).value = document.getElementById(id).value.toUpperCase();
