@@ -46,50 +46,58 @@
         </div>
         <div class="black-background" id="js-black-bg-lose"></div>
     </div>
-
 </body>
 </html>
 
 <script>
     const airlines = ["ANA", "ADO", "IBX", "ORC", "SFJ", "SNA", "JAL", "HAC", "JAC", "SKY", "JST", "APJ", "FDA", "SJO", "VNL", "AHX", "WAJ"];
     const answer = airlines[Math.floor(Math.random() * (airlines.length - 1))];
+    const ids = ["1_1", "1_2", "1_3", "1_submit", "2_1", "2_2", "2_3", "2_submit", "3_1", "3_2", "3_3","3_submit"];
+    const record = 3;
 
     console.log(answer);
 
-    const record = 3;
     for (let index = 1; index <= record; index++) {
         document.getElementById(`${index}_submit`).addEventListener("click", () => {
             const [first_input, second_input, third_input, button] = getNeededDoms(index);
             const airline = first_input.value + second_input.value + third_input.value;
             const inputs = [first_input, second_input, third_input];
 
-            if (isCorrectAnswer(airline)) return;
-            if (isInappropriateAnswer(airline)) return;
+            if (isCorrectAnswer(airline) || isInappropriateAnswer(airline)) return;
             setDisabledAttribute([button, first_input, second_input, third_input]);
             reflectAnswers(inputs, checkAnswers(inputs));
             index !== record ? removeDisabled(index + 1) : showModalLose();
         });
     }
 
+    ["next", "next-lose"].forEach((next_button) => {
+        document.getElementById(next_button).addEventListener("click", () => {
+            location.reload();
+        });
+    });
+
+    ids.forEach((id, index) => {
+        if(ids.length === index + 1) return;
+        document.getElementById(id).addEventListener("input", () => {
+            document.getElementById(id).value = document.getElementById(id).value.toUpperCase();
+            document.getElementById(ids[index + 1]).focus();
+        });
+    });
+
     function giveResultClass(result, input) {
         input.classList.add(result);
     }
 
     function isCorrectAnswer(airline) {
-        if (airline === answer) {
-            showModal();
-            return true;
-        }
-        return false;
+        if(airline !== answer) return false;
+        showModal();
+        return true;
     }
 
     function isInappropriateAnswer(airline) {
-        if (!airlines.includes(airline)) {
-            alert("そのような航空会社はありません");
-            return true;
-        }
-
-        return false;
+        if(airlines.includes(airline)) return false;
+        alert("そのような航空会社はありません");
+        return true;
     }
 
     function checkAnswers(inputs) {
@@ -104,8 +112,7 @@
 
     function reflectAnswers(inputs, results) {
         for (let index = 0; index < results.length; index++) {
-            const result = results[index];
-            giveResultClass(result, inputs[index]);
+            giveResultClass(results[index], inputs[index]);
         }
     }
 
@@ -153,50 +160,15 @@
     }
 
     function closePopUp(elem) {
-        elem.addEventListener('click', function () {
+        elem.addEventListener('click', () {
             document.getElementById('js-popup').classList.remove('is-show');
         })
     }
 
     function closePopUpLose(elem) {
-        elem.addEventListener('click', function () {
+        elem.addEventListener('click', () {
             document.getElementById('js-popup-lose').classList.remove('is-show');
         })
-    }
-
-    ["next", "next-lose"].forEach((next_button) => {
-        document.getElementById(next_button).addEventListener("click", () => {
-            location.reload();
-        });
-    });
-
-    const ids = ["1_1", "1_2", "1_3", "1_submit", "2_1", "2_2", "2_3", "2_submit", "3_1", "3_2", "3_3","3_submit"];
-
-    ids.forEach((id, index) => {
-        if(ids.length === index + 1) return;
-       document.getElementById(id).addEventListener("input", () => {
-           ownValueChangeUpper(id);
-           document.getElementById(ids[index + 1]).focus();
-       });
-    });
-
-    // document.getElementById("1_1").addEventListener("input", () => {
-    //     ownValueChangeUpper("1_1");
-    //     document.getElementById("1_2").focus();
-    // });
-    //
-    // document.getElementById("1_2").addEventListener("input", () => {
-    //     ownValueChangeUpper("1_2");
-    //     document.getElementById("1_3").focus();
-    // });
-    //
-    // document.getElementById("1_3").addEventListener("input", () => {
-    //     ownValueChangeUpper("1_3");
-    //     document.getElementById("1_submit").focus();
-    // });
-
-    function ownValueChangeUpper(id) {
-        document.getElementById(id).value = document.getElementById(id).value.toUpperCase();
     }
 
 </script>
