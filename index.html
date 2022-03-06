@@ -54,6 +54,9 @@
     const answer = airlines[Math.floor(Math.random() * (airlines.length - 1))];
     const ids = ["1_1", "1_2", "1_3", "1_submit", "2_1", "2_2", "2_3", "2_submit", "3_1", "3_2", "3_3","3_submit"];
     const record = 3;
+    const correct = "correct";
+    const include = "include";
+    const wrong = "wrong";
 
     console.log(answer);
 
@@ -66,7 +69,7 @@
             if (isCorrectAnswer(airline) || isInappropriateAnswer(airline)) return;
             setDisabledAttribute([button, first_input, second_input, third_input]);
             reflectAnswers(inputs, checkAnswers(inputs));
-            index !== record ? removeDisabled(index + 1) : showModalLose();
+            index === record ? showModalLose() : removeDisabled(index + 1);
         });
     }
 
@@ -102,18 +105,16 @@
 
     function checkAnswers(inputs) {
         let results = [];
-        for (let index = 0; index < answer.split("").length; index++) {
-            const word = answer[index];
-            results.push(giveResult(word, inputs[index].value));
-        }
-
+        answer.split("").forEach((each_answer, index) => {
+            results.push(giveResult(each_answer, inputs[index].value));
+        });
         return results;
     }
 
     function reflectAnswers(inputs, results) {
-        for (let index = 0; index < results.length; index++) {
-            giveResultClass(results[index], inputs[index]);
-        }
+        results.forEach((result, index) => {
+            giveResultClass(result, inputs[index]);
+        });
     }
 
     function getNeededDoms(index) {
@@ -140,34 +141,29 @@
 
     function giveResult(word, partOfAnswer) {
         if (word === partOfAnswer) {
-            return "correct";
+            return correct;
         } else if (answer.includes(partOfAnswer)) {
-            return "include";
+            return include;
         } else {
-            return "wrong";
+            return wrong;
         }
     }
 
     function showModal() {
         document.getElementById('js-popup').classList.add('is-show');
-        closePopUp(document.getElementById('js-black-bg'));
+        closePopUp(document.getElementById('js-black-bg'), true);
     }
 
     function showModalLose() {
         document.getElementById('js-popup-lose').classList.add('is-show');
         document.getElementById("answer-airline").textContent = `正解は${answer}でした`;
-        closePopUpLose(document.getElementById('js-black-bg-lose'));
+        closePopUp(document.getElementById('js-black-bg-lose'), false);
     }
 
-    function closePopUp(elem) {
-        elem.addEventListener('click', () {
-            document.getElementById('js-popup').classList.remove('is-show');
-        })
-    }
-
-    function closePopUpLose(elem) {
-        elem.addEventListener('click', () {
-            document.getElementById('js-popup-lose').classList.remove('is-show');
+    function closePopUp(elem, win) {
+        const result_id = win ? "js-popup" : "js-popup-lose";
+        elem.addEventListener('click', () => {
+            document.getElementById(result_id).classList.remove('is-show');
         })
     }
 
